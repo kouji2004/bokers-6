@@ -26,21 +26,10 @@
              </td>
            <% end %>
         </tr>
-         <tr>
-            <% @book.book_comments.each do |book_comment| %>
-            　<td>
-               <%= image_tag book_comment.user.get_profile_image, size:"50x50"  %>
-               <%= book_comment.user.name %>
-               <%= book_comment.comment %>
-                 <% if book_comment.user == current_user %>
-                 <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete, class:"btn btn-danger btn-group-sm" %>
-            　</td>
-            </tr>
-                <% end %>
-            <% end %>
           </table>
-
-   <%= form_with model: [@book, @book_comment] do |f| %>
+           <div id="comments_area"> <%=render "book_comments/book_comments",book: @book %> </div>
+           <div id="count_area"><%= render "book_comments/book_count", book: @book %></div>
+          　<%= form_with model: [@book, @book_comment], local: false do |f| %>
               <%= f.text_area :comment, rows: '5',class: "form-control", placeholder: "コメントをここに" %>
               <%= f.submit "送信する" %>
             <% end %>
